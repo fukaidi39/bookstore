@@ -23,6 +23,9 @@ public class Page<T> {
     private Integer pageSize = PAGE_SIZE;
     //当前页数据
     private List<T> items;
+    //分页条的请求地址
+    private String url;
+
 
     public Page() {
     }
@@ -33,6 +36,23 @@ public class Page<T> {
         this.pageTotalCount = pageTotalCount;
         this.pageSize = pageSize;
         this.items = items;
+    }
+
+    public Page(Integer pageNo, Integer pageTotal, Integer pageTotalCount, Integer pageSize, List<T> items, String url) {
+        this.pageNo = pageNo;
+        this.pageTotal = pageTotal;
+        this.pageTotalCount = pageTotalCount;
+        this.pageSize = pageSize;
+        this.items = items;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Integer getPageNo() {
@@ -90,6 +110,7 @@ public class Page<T> {
                 ", pageTotalCount=" + pageTotalCount +
                 ", pageSize=" + pageSize +
                 ", items=" + items +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

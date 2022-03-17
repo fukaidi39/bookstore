@@ -48,4 +48,14 @@ public interface BookService {
      * @return 分页对象
      */
     public Page<Book> page(int pageNo, int pageSize);
+
+    /**
+     * 处理价格区间的分页
+     * @param pageNo
+     * @param pageSize
+     * @param min
+     * @param max
+     * @return
+     */
+    public Page<Book> pageByPrice(int pageNo, int pageSize, int min, int max);
 }

@@ -23,6 +23,25 @@ public class ClientBookServlet extends BaseServlet {
         int pageSize = WebUtils.parseInt(request.getParameter("pageSize"), Page.PAGE_SIZE);
         //2.调用BookService.page(pageNo,pageSize)得到page对象
         Page<Book> page = bookService.page(pageNo,pageSize);
+        //设置分页访问路径
+        page.setUrl("Client/BookServlet?action=page");
+        //3.保存page对象到request域中
+        request.setAttribute("page", page);
+        //4.请求转发到pages/manager/book_manager.jsp页面
+        request.getRequestDispatcher("/pages/client/index.jsp").forward(request,response);
+    }
+
+    protected void pageByPrice(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //1.获取请求的参数pageNo和pageSize,min,max没传值时使用默认值
+        int pageNo = WebUtils.parseInt(request.getParameter("pageNo"), 1);
+        int pageSize = WebUtils.parseInt(request.getParameter("pageSize"), Page.PAGE_SIZE);
+        int min = WebUtils.parseInt(request.getParameter("min"),0);
+        int max = WebUtils.parseInt(request.getParameter("max"),Integer.MAX_VALUE);
+        //2.调用BookService.page(pageNo,pageSize)得到page对象
+        Page<Book> page = bookService.pageByPrice(pageNo,pageSize,min,max);
+        //设置分页访问路径
+        page.setUrl("Client/BookServlet?action=pageByPrice");
+
         //3.保存page对象到request域中
         request.setAttribute("page", page);
         //4.请求转发到pages/manager/book_manager.jsp页面

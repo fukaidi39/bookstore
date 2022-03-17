@@ -23,9 +23,10 @@
 	<div id="main">
 		<div id="book">
 			<div class="book_cond">
-				<form action="" method="get">
-					价格：<input id="min" type="text" name="min" value=""> 元 - 
-						<input id="max" type="text" name="max" value=""> 元 
+				<form action="Client/BookServlet" method="get">
+					<input type="hidden" name="action" value="pageByPrice">
+					价格：<input id="min" type="text" name="min" value="${param.min}"> 元 -
+						<input id="max" type="text" name="max" value="${param.max}"> 元
 						<input type="submit" value="查询" />
 				</form>
 			</div>
@@ -68,73 +69,8 @@
 			</div>
 			</c:forEach>
 		</div>
-
-		<div id="page_nav">
-			<%--大于首页才显示--%>
-			<c:if test="${requestScope.page.pageNo>1}">
-				<a href="Client/BookServlet?action=page&pageNo=1">首页</a>
-				<a href="Client/BookServlet?action=page&pageNo=${requestScope.page.pageNo-1}">上一页</a>
-			</c:if>
-			<%--五连页码输出的开始--%>
-			<c:choose>
-				<%--情况1：如果总页码<5,页码的范围是1-总页码--%>
-				<c:when test="${requestScope.page.pageTotal <= 5}">
-					<c:set var="begin" value="1"></c:set>
-					<c:set var="end" value="${requestScope.page.pageTotal}"></c:set>
-				</c:when>
-				<%--情况2：如果总页码>5--%>
-				<c:when test="${requestScope.page.pageTotal > 5}">
-					<c:choose>
-						<%--当前页码为前面3个:1,2,3的情况，页码范围1-5--%>
-						<c:when test="${requestScope.page.pageNo<=3}">
-							<c:set var="begin" value="1"></c:set>
-							<c:set var="end" value="5"></c:set>
-						</c:when>
-						<%--当前页码为后三个，总页码范围是：总页码-4 - 总页码--%>
-						<c:when test="${requestScope.page.pageNo >= requestScope.page.pageTotal-2}">
-							<c:set var="begin" value="${requestScope.page.pageTotal-4}"></c:set>
-							<c:set var="end" value="${requestScope.page.pageTotal}"></c:set>
-						</c:when>
-						<%--其他页码范围：当前页码-2到当前页码+2--%>
-						<c:otherwise>
-							<c:set var="begin" value="${requestScope.page.pageNo-2}"></c:set>
-							<c:set var="end" value="${requestScope.page.pageNo+2}"></c:set>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-			</c:choose>
-			<c:forEach begin="${begin}" end="${end}" var="i">
-				<c:if test="${i == requestScope.page.pageNo}">
-					[${i}]
-				</c:if>
-				<c:if test="${i != requestScope.page.pageNo}">
-					<a href="Client/BookServlet?action=page&pageNo=${i}">${i}</a>
-				</c:if>
-			</c:forEach>
-			<%--五连页码输出的结束--%>
-			<c:if test="${requestScope.page.pageNo<requestScope.page.pageTotal}">
-				<a href="Client/BookServlet?action=page&pageNo=${requestScope.page.pageNo+1}">下一页</a>
-				<a href="Client/BookServlet?action=page&pageNo=${requestScope.page.pageTotal}">末页</a>
-			</c:if>
-
-			共${requestScope.page.pageTotal}页，${requestScope.page.pageTotalCount}条记录
-			到第<input value="${param.pageNo}" name="pn" id="pn_input"/>页
-			<input id="searchPageBtn" type="button" value="确定">
-			<script type="text/javascript">
-				$(function (){
-					//跳转到指定页码
-					$("#searchPageBtn").click(function (){
-						var pageNo = $("#pn_input").val();
-						var pageTotal = ${requestScope.page.pageTotal};
-						if (pageNo<1 || pageNo> pageTotal){
-							alert("请输入正确的页码");
-						}
-						//javaScript提供一个location地址栏对象，属性href地址可读可写
-						location.href = "${pageScope.basePath}Client/BookServlet?action=page&pageNo="+pageNo;
-					});
-				});
-			</script>
-		</div>
+		<%--静态包含分页模块--%>
+		<%@include file="/pages/common/page_nav.jsp"%>
 	
 	</div>
 
