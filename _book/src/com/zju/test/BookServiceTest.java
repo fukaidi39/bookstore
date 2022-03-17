@@ -45,4 +45,9 @@ public class BookServiceTest {
             System.out.println(iterator.next());
         }
     }
+
+    @Test
+    public void page(){
+        System.out.println(bookService.page(1,4));
+    }
 }

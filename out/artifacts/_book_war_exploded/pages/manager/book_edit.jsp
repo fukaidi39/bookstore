@@ -34,6 +34,7 @@
 				<input type="hidden" name="action" value="${empty param.id?"addBook":"updateBook"}">
 				<%--给更新方法回传id，表单中数据可以自动封装到bean--%>
 				<input type="hidden" name="id" value="${requestScope.book.id}">
+				<input type="hidden" name="pageNo" value="${param.pageNo}">
 				<table>
 					<tr>
 						<td>名称</td>

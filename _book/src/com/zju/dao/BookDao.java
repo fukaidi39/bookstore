@@ -42,4 +42,18 @@ public interface BookDao {
      * @return
      */
     public List<Book> queryBooks();
+
+    /**
+     * 查询总记录数
+     * @return
+     */
+    public Integer queryForPageTotalCount();
+
+    /**
+     * 查询分页显示的图书集合
+     * @param begin
+     * @param pageSize
+     * @return
+     */
+    public List<Book> queryForPageItems(int begin, int pageSize);
 }

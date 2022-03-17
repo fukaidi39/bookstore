@@ -1,6 +1,7 @@
 package com.zju.service;
 
 import com.zju.pojo.Book;
+import com.zju.pojo.Page;
 
 import java.util.List;
 
@@ -39,4 +40,12 @@ public interface BookService {
      * @return
      */
     public List<Book> queryBooks();
+
+    /**
+     * 分页
+     * @param pageNo 当前页码
+     * @param pageSize 每页显示的数量
+     * @return 分页对象
+     */
+    public Page<Book> page(int pageNo, int pageSize);
 }
