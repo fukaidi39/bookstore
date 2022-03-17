@@ -40,8 +40,16 @@ public class ClientBookServlet extends BaseServlet {
         //2.调用BookService.page(pageNo,pageSize)得到page对象
         Page<Book> page = bookService.pageByPrice(pageNo,pageSize,min,max);
         //设置分页访问路径
-        page.setUrl("Client/BookServlet?action=pageByPrice");
-
+        StringBuilder url = new StringBuilder("Client/BookServlet?action=pageByPrice");
+        //如果有最小价格的参数，追加到分页条的地址参数中
+        if (request.getParameter("min") != null){
+            url.append("&min=").append(request.getParameter("min"));
+        }
+        //如果有最大价格的参数，追加到分页条的地址参数中
+        if (request.getParameter("max") != null){
+            url.append("&max=").append(request.getParameter("max"));
+        }
+        page.setUrl(url.toString());
         //3.保存page对象到request域中
         request.setAttribute("page", page);
         //4.请求转发到pages/manager/book_manager.jsp页面
