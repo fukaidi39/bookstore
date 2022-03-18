@@ -10,6 +10,7 @@
       <root url="jar://$PROJECT_DIR$/_book/web/WEB-INF/lib/commons-logging-1.1.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/_book/web/WEB-INF/lib/taglibs-standard-spec-1.2.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/_book/web/WEB-INF/lib/taglibs-standard-impl-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/_book/web/WEB-INF/lib/mykaptcha-2.3.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
