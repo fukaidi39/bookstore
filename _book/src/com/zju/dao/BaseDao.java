@@ -40,7 +40,7 @@ public abstract class BaseDao {
     }
 
     /**
-     * 查询返回一个javaBean对象的sql语句
+     * 查询返回一个javaBean对象的sql语句，根据查询属性调用set自动非javaBean赋值
      * @param sql:执行的sql语句
      * @param type:返回的对象类型
      * @param args:sql语句对应的参数
@@ -60,7 +60,7 @@ public abstract class BaseDao {
     }
 
     /**
-     * 查询返回多个javaBean对象的sql语句
+     * 查询返回多个javaBean对象的sql语句,根据查询属性调用set自动非javaBean赋值
      * @param sql:执行的sql语句
      * @param type:返回对象的类型
      * @param args: sql语句对应的参数

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>订单管理</title>
+<title>订单详情</title>
 	<%--静态包含base标签,css样式,jquery文件--%>
 	<%@include file="/pages/common/head.jsp"%>
 </head>
@@ -21,29 +21,23 @@
 	<div id="main">
 		<table>
 			<tr>
-				<td>日期</td>
-				<td>金额</td>
-				<td>状态</td>
-				<td>详情</td>
-				<td>发货</td>
-				
-			</tr>
-			<%--遍历订单信息--%>
-			<c:forEach items="${requestScope.orders}" var="order">
-				<tr>
-					<td>${order.createTime}</td>
-					<td>${order.price}</td>
-					<td>
-						<c:if test="${order.status == 0}">未发货</c:if>
-						<c:if test="${order.status == 1}">已发货</c:if>
-						<c:if test="${order.status == 2}">已签收</c:if>
-					</td>
-					<td><a href="OrderServlet?action=showOrderDetail&orderId=${order.orderId}">查看详情</a></td>
+				<td>编号</td>
+				<td>名称</td>
+				<td>数量</td>
+				<td>单价</td>
+				<td>总价格</td>
+				<td>订单号</td>
 
-					<td>
-						<c:if test="${order.status == 0}"><a href="OrderServlet?action=sendOrder&orderId=${order.orderId}">点击发货</a></c:if>
-						<c:if test="${order.status != 0}">已发出</c:if>
-					</td>
+			</tr>
+			<%--遍历订单项的信息--%>
+			<c:forEach items="${requestScope.orderDetail}" var="orderItem">
+				<tr>
+					<td>${orderItem.id}</td>
+					<td>${orderItem.name}</td>
+					<td>${orderItem.count}</td>
+					<td>${orderItem.price}</td>
+					<td>${orderItem.totalPrice}</td>
+					<td>${orderItem.orderId}</td>
 				</tr>
 			</c:forEach>
 		</table>

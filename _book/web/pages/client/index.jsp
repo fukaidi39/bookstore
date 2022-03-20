@@ -32,7 +32,7 @@
 				<%--如果已经登录，显示登录成功后的信息--%>
 				<c:if test="${not empty sessionScope.User}">
 					<span>欢迎<span class="um_span">${sessionScope.User.username}</span>光临尚硅谷书城</span>
-					<a href="pages/order/order.jsp">我的订单</a>
+					<a href="OrderServlet?action=showMyOrders">我的订单</a>
 					<a href="UserServlet?action=logout">注销</a>&nbsp;&nbsp;
 				</c:if>
 				<a href="pages/cart/cart.jsp">购物车</a>
