@@ -28,7 +28,7 @@
 							<div class="msg_cont">
 								<b></b>
 								<span class="errorMsg">
-									${ requestScope.msg == null? "请输入用户名或密码":requestScope.msg}
+									${requestScope.msg == null? "请输入用户名或密码":requestScope.msg}
 								</span>
 							</div>
 							<div class="form">

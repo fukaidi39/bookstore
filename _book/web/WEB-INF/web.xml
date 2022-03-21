@@ -13,4 +13,11 @@
             <url-pattern>/kaptcha.jpg</url-pattern>
         </servlet-mapping>
 
+        <!--配置拦截路径-->
+        <filter-mapping>
+            <filter-name>ManagerFilter</filter-name>
+            <url-pattern>/pages/manager/*</url-pattern>
+            <url-pattern>/manager/BookServlet</url-pattern>
+        </filter-mapping>
+
 </web-app>
