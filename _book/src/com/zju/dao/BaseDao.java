@@ -16,7 +16,7 @@ import java.util.List;
  * @Date:2022/3/10-18:59
  */
 public abstract class BaseDao {
-
+    //Dao层中不能关闭连接,事务结束后统一关闭;不能捕获异常，要抛出统一回滚事务
     //使用Dbutils操作数据库crud
 
     private QueryRunner queryRunner = new QueryRunner();
@@ -33,10 +33,8 @@ public abstract class BaseDao {
             return queryRunner.update(conn,sql,args);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            JdbcUtils.close(conn);
+            throw new RuntimeException(e);
         }
-        return -1;
     }
 
     /**
@@ -53,10 +51,8 @@ public abstract class BaseDao {
             return queryRunner.query(conn,sql, new BeanHandler<T>(type), args);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            JdbcUtils.close(conn);
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     /**
@@ -73,10 +69,8 @@ public abstract class BaseDao {
             return queryRunner.query(conn, sql, new BeanListHandler<T>(type),args);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            JdbcUtils.close(conn);
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     /**
@@ -91,10 +85,8 @@ public abstract class BaseDao {
             return queryRunner.query(conn,sql, new ScalarHandler(),args);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            JdbcUtils.close(conn);
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
 }
