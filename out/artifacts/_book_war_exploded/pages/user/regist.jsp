@@ -14,6 +14,24 @@
 </style>
 	<script type="text/javascript">
 		$(function (){
+			//AJAX验证用户名是否被注册
+			$("#username").blur(function (){
+				//1.获取用户名
+				var username = this.value;
+				var regex = /^[a-z0-9_-]{5,12}$/;
+				//调用AJAX请求
+				$.getJSON("http://localhost:8080/book/UserServlet","action=ajaxExistsUserName&userName="+
+						username,function (data){
+					if(data.existsUser){
+						$("span.errorMsg").text("用户名已存在！");
+					}else if (!regex.test(username)){
+						$("span.errorMsg").text("输入用户名不合法！");
+					}else{
+						$("span.errorMsg").text("用户名可用！");
+					}
+				});
+			});
+
 			//给验证码的图片，绑定单击事件
 			$("#code_img").click(function (){
 				//当前正在响应的验证码图片dom对象,src可读可写，在最后加入时间戳可以防止缓存

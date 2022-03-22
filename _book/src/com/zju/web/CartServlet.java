@@ -3,6 +3,7 @@ package com.zju.web; /**
  * @Date:2022/3/18-21:35
  */
 
+import com.google.gson.Gson;
 import com.zju.pojo.Book;
 import com.zju.pojo.Cart;
 import com.zju.pojo.CartItem;
@@ -15,10 +16,13 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "CartServlet", value = "/CartServlet")
 public class CartServlet extends BaseServlet {
-    /**
+
+   /**
      * 加入购物车
      * @param request
      * @param response
@@ -45,6 +49,39 @@ public class CartServlet extends BaseServlet {
         request.getSession().setAttribute("lastName",cartItem.getName());
         //重定向回原页面,http协议中有个请求头，会把当前地址栏地址发给服务器
         response.sendRedirect(request.getHeader("Referer"));
+    }
+
+    /**
+     * ajax局部加入购物车
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void ajaxAddItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        BookService bookService = new BookServiceImpl();
+        //获取请求的参数 id
+        int id = WebUtils.parseInt(request.getParameter("id"), 0);
+        //调用bookService.queryBookById(id)得到图书的信息
+        Book book = bookService.queryBookById(id);
+        //把图书信息转化为CartItem商品项
+        CartItem cartItem = new CartItem(book.getId(),book.getName(),1,book.getPrice(),book.getPrice());
+        //调用Cart.addItem(CartItem)添加商品项
+        Cart cart = (Cart) request.getSession().getAttribute("cart");
+        if(cart == null){
+            //第一次创建购物车
+            cart = new Cart();
+            request.getSession().setAttribute("cart", cart);
+        }
+        cart.addItem(cartItem);
+        //返回购物车总的商品数量和最后一个添加的商品名称
+        Map<String, Object> map = new HashMap<>();
+        map.put("totalCount",cart.getTotalCount());
+        map.put("lastName", cartItem.getName());
+        //以json响应流形式输出
+        Gson gson = new Gson();
+        String json = gson.toJson(map);
+        response.getWriter().write(json);
     }
 
     /**

@@ -32,4 +32,11 @@
             <!--location是要跳转去的页面-->
             <location>/pages/error/error500.jsp</location>
         </error-page>
+
+    <error-page>
+        <!--error-code是错误类型-->
+        <error-code>404</error-code>
+        <!--location是要跳转去的页面-->
+        <location>/pages/error/error404.jsp</location>
+    </error-page>
 </web-app>

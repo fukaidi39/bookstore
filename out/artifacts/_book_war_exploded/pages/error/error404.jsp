@@ -13,7 +13,7 @@
     <%@include file="/pages/common/head.jsp"%>
 </head>
 <body>
-    页面出错了,请联系客服！
+    很抱歉,你访问的页面不存在，或者已经被删除！
     <a href="index.jsp">返回首页</a>
 </body>
 </html>

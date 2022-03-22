@@ -39,7 +39,6 @@ public class OrderServlet extends BaseServlet {
         }
         Integer userId = loginUser.getId();
         //调用Service层生成订单
-        int i = 12/0;
         String orderId = orderService.createOrder(cart, userId);
         //将订单保存到session域中
         request.getSession().setAttribute("orderId", orderId);

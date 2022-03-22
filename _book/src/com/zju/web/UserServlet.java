@@ -3,6 +3,7 @@ package com.zju.web; /**
  * @Date:2022/3/15-20:19
  */
 
+import com.google.gson.Gson;
 import com.zju.pojo.User;
 import com.zju.service.UserService;
 import com.zju.service.impl.UserServiceImpl;
@@ -13,11 +14,34 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
 
 @WebServlet(name = "UserServlet", value = "/UserServlet")
 public class UserServlet extends BaseServlet {
+    /**
+     * AJAX请求验证用户名是否存在
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void ajaxExistsUserName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //获取请求参数
+        String userName = request.getParameter("userName");
+        //调用service层的方法验证
+        boolean existsUser = userService.existsUser(userName);
+        //把获取的参数封装成为map对象
+        Map<String, Object> map = new HashMap<>();
+        map.put("existsUser", existsUser);
+        //将json字符传通过输出流的形式返回
+        Gson gson = new Gson();
+        String json = gson.toJson(map);
+        response.getWriter().write(json);
+    }
+
     /**
      * 处理登录业务
      * @param request
